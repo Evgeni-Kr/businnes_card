@@ -1,0 +1,79 @@
+/* Адаптивные стили */
+@media (max-width: 992px) {
+    .header_content_menu {
+        position: fixed;
+        top: 15vh;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 15vh);
+        background-color: rgba(49, 49, 49, 0.95);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 50px;
+        transition: left 0.5s ease;
+    }
+
+    .header_content_menu.active {
+        left: 0;
+    }
+
+    .header_content_menu li {
+        margin: 20px 0;
+    }
+
+    .header_content_menu a {
+        font-size: 1.5rem;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    .main_content_phrase h1 {
+        font-size: 2rem;
+    }
+    
+    .service-detail {
+        flex-direction: column;
+    }
+    
+    .contact-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .main_content_phrase {
+        padding: 30px 20px;
+    }
+
+    .main_content_phrase h1 {
+        font-size: 1.8rem;
+    }
+
+    .service-card {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .page-header {
+        padding: 30px 20px;
+    }
+    
+    .about-section, .service-info, .contact-info, .contact-form-container, .map-container, .approach-section {
+        padding: 30px 20px;
+    }
+}

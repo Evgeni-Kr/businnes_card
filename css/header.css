@@ -1,0 +1,83 @@
+/* Стили шапки */
+header {
+    background-color: rgba(49, 49, 49, 0.9);
+    height: 15vh;
+    min-height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header_content_logo {
+    width: 25vw;
+    height: 100%;
+    max-width: 250px;
+    max-height: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.header_content_logo img {
+    display: block;
+    max-height: 80%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.header_content_menu {
+    display: flex;
+    list-style: none;
+}
+
+.header_content_menu li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.header_content_menu a {
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 10px 5px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.header_content_menu a:hover {
+    color: #4CAF50;
+}
+
+.header_content_menu li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.header_content_menu li:hover::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 3px 0;
+    transition: 0.3s;
+}

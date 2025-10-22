@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>О нас - Студия дизайна</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="header_content_logo">
+            <img src="/image/лого.png" alt="logo">
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="header_content_menu" id="menu">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="services.html">Услуги</a></li>
+            <li><a href="team.html">Команда</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="approaches.html">Подходы</a></li>
+        </ul>
+    </header>
+    <main id="main">
+        <div class="page-header">
+            <h1>О нас</h1>
+            <p>Узнайте больше о нашей студии и наших ценностях</p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-section">
+                <h2>Наша история</h2>
+                <p>Мы начали свой путь в 2015 году как небольшая команда энтузиастов, увлеченных дизайном. За эти годы
+                    мы выросли в полноценную студию, реализовавшую более 200 проектов для клиентов из разных отраслей.
+                </p>
+                <p>Наша философия проста: каждый проект - это возможность создать что-то уникальное, функциональное и
+                    эстетически привлекательное.</p>
+            </div>
+
+            <div class="about-section">
+                <h2>Наши ценности</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <h3>Креативность</h3>
+                        <p>Мы постоянно ищем новые идеи и нестандартные решения для наших клиентов.</p>
+                    </div>
+                    <div class="value-item">
+                        <h3>Качество</h3>
+                        <p>Внимание к деталям и стремление к совершенству в каждом проекте.</p>
+                    </div>
+                    <div class="value-item">
+                        <h3>Сотрудничество</h3>
+                        <p>Мы работаем в тесном контакте с клиентами, чтобы полностью понять их потребности.</p>
+                    </div>
+                    <div class="value-item">
+                        <h3>Инновации</h3>
+                        <p>Мы следим за трендами и используем современные технологии в работе.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>Почему выбирают нас</h2>
+                <ul class="advantages-list">
+                    <li>Индивидуальный подход к каждому клиенту</li>
+                    <li>Опытная команда профессионалов</li>
+                    <li>Соблюдение сроков и бюджетов</li>
+                    <li>Комплексный подход к решению задач</li>
+                    <li>Постпроектная поддержка</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>Телефон: +7 (999) 123-45-67</p>
+                <p>Email: info@designstudio.ru</p>
+                <p>Адрес: г. Гродно, ул. Ожешко, д. 23</p>
+            </div>
+            <div class="footer-section">
+                <h3>Услуги</h3>
+                <a href="services.html#web-design">Веб-дизайн</a>
+                <a href="services.html#branding">Брендинг</a>
+                <a href="services.html#ui-ux">UI/UX дизайн</a>
+                <a href="services.html#graphic-design">Графический дизайн</a>
+            </div>
+            <div class="footer-section">
+                <h3>Социальные сети</h3>
+                <a href="#">VKontakte</a>
+                <a href="#">Instagram</a>
+                <a href="#">Behance</a>
+                <a href="#">Dribbble</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Студия дизайна. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menu = document.getElementById('menu');
+
+            mobileMenu.addEventListener('click', function () {
+                this.classList.toggle('active');
+                menu.classList.toggle('active');
+            });
+
+            const menuItems = document.querySelectorAll('.header_content_menu a');
+            for (const item of menuItems) {
+                item.addEventListener('click', function () {
+                    mobileMenu.classList.remove('active');
+                    menu.classList.remove('active');
+                });
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "businnes_card-1",
+  "version": "1.0.0",
+  "description": "node js project to web-development",
+  "keywords": [
+    "user"
+  ],
+  "homepage": "https://github.com/Evgeni-Kr/businnes_card#readme",
+  "bugs": {
+    "url": "https://github.com/Evgeni-Kr/businnes_card/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evgeni-Kr/businnes_card.git"
+  },
+  "license": "ISC",
+  "author": "Evgeni",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

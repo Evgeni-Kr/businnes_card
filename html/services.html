@@ -143,24 +143,6 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menu = document.getElementById('menu');
-            
-            mobileMenu.addEventListener('click', function() {
-                this.classList.toggle('active');
-                menu.classList.toggle('active');
-            });
-            
-            const menuItems = document.querySelectorAll('.header_content_menu a');
-            for(const item of menuItems){
-                item.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    menu.classList.remove('active');
-                });
-            };
-        });
-    </script>
+    <script src="/js/mobile_menu.js"></script>
 </body>
 </html>

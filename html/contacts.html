@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Контакты - Студия дизайна</title>
     <meta charset="UTF-8">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="/css/pages.css">
     <link rel="stylesheet" href="/css/responsive.css">
 </head>
+
 <body>
     <header id="header">
         <div class="header_content_logo">
@@ -35,7 +37,7 @@
             <h1>Контакты</h1>
             <p>Свяжитесь с нами для обсуждения вашего проекта</p>
         </div>
-        
+
         <div class="contact-content">
             <div class="contact-info">
                 <h2>Наши контакты</h2>
@@ -66,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="contact-form-container">
                 <h2>Напишите нам</h2>
                 <form class="contact-form">
@@ -100,7 +102,7 @@
                 </form>
             </div>
         </div>
-        
+
         <div class="map-container">
             <h2>Как нас найти</h2>
             <div class="map-placeholder">
@@ -109,7 +111,7 @@
             </div>
         </div>
     </main>
-    
+
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -137,27 +139,13 @@
             </div>
         </div>
     </footer>
-
+    <script src="/js/mobile_menu.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menu = document.getElementById('menu');
-            
-            mobileMenu.addEventListener('click', function() {
-                this.classList.toggle('active');
-                menu.classList.toggle('active');
-            });
-            const menuItems = document.querySelectorAll('.header_content_menu a');
-            for(const item of menuItems){
-                item.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    menu.classList.remove('active');
-                });
-            };
+        document.addEventListener('DOMContentLoaded', function () {
             // Обработка формы
             const contactForm = document.querySelector('.contact-form');
             if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
+                contactForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
                     this.reset();
@@ -166,4 +154,5 @@
         });
     </script>
 </body>
+
 </html>

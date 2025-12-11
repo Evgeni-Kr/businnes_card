@@ -40,6 +40,13 @@ header {
     position: relative;
 }
 
+   /* Временные стили для отладки */
+        #header-placeholder {
+            min-height: 100px;
+            padding: 0;
+            margin: 0;
+        }
+
 .header_content_menu a {
     color: #fff;
     font-size: 1.1rem;

@@ -1,85 +1,172 @@
-const http = require('node:http');
-const fs = require('node:fs');
-const path = require('node:path');
-const url = require('node:url');
+const http = require("node:http");
+const fs = require("node:fs");
+const path = require("node:path");
+const url = require("node:url");
 
-const host = '127.0.0.1';
+const parseBody = require("./utils/bodyParser");
+const orderController = require("./js/controllers/orderController");
+const db = require("./js/database");
+
+const host = "127.0.0.1";
 const port = 7000;
 
+// ---------- HELPERS ----------
+
+async function getUserFromRequest(req) {
+  const username = req.headers["x-user"];
+  if (!username) return null;
+  return db.findUserByUsername(username);
+}
+
 function getContentType(filePath) {
-    const ext = path.extname(filePath).toLowerCase();
-    const mimeTypes = {
-        '.html': 'text/html',
-        '.css': 'text/css',
-        '.js': 'text/javascript',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.gif': 'image/gif',
-        '.svg': 'image/svg+xml'
-    };
-    return mimeTypes[ext] || 'text/plain';
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeTypes = {
+    ".html": "text/html; charset=utf-8",
+    ".css": "text/css",
+    ".js": "text/javascript",
+    ".json": "application/json",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".gif": "image/gif",
+    ".svg": "image/svg+xml",
+  };
+  return mimeTypes[ext] || "application/octet-stream";
 }
 
-function sendFile(res, filePath, contentType) {
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.statusCode = 404;
-            res.end('File not found');
-            return;
-        }
-        res.setHeader('Content-Type', contentType);
-        res.end(data);
+function sendFile(res, filePath) {
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      return res.end("File not found");
+    }
+
+    res.writeHead(200, {
+      "Content-Type": getContentType(filePath),
     });
+    res.end(data);
+  });
 }
 
-function sendJson(res, data, statusCode = 200) {
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = statusCode;
-    res.end(JSON.stringify(data));
-}
+// ---------- SERVER ----------
 
-const server = http.createServer((req, res) => {
-    const parsedUrl = url.parse(req.url, true);
-    const pathname = parsedUrl.pathname;
+const server = http.createServer(async (req, res) => {
+  try {
+    const { pathname } = url.parse(req.url, true);
     const method = req.method;
 
-    if (pathname.startsWith('/css/')) {
-        const cssPath = path.join(__dirname, pathname);
-        const contentType = getContentType(cssPath);
-        sendFile(res, cssPath, contentType);
-        return;
+    // ---------- IMAGES ----------
+    if (pathname.startsWith("/resources/static/image")) {
+      
+      const filePath = path.join(
+        __dirname,
+        pathname        
+      );
+
+      return sendFile(res, filePath);
     }
 
-    if (pathname === '/api/users') {
-        if (method === 'GET') {
-            sendJson(res, { message: 'Get users' });
-        } else if (method === 'POST') {
-            sendJson(res, { message: 'Create user' });
-        } else {
-            res.statusCode = 405;
-            res.end('Method not allowed');
-        }
-        return;
+    // ---------- STATIC ----------
+    if (pathname.startsWith("/resources/static/")) {
+      const filePath = path.join(__dirname, pathname);
+      return sendFile(res, filePath);
+    }
+    // ---------- API ----------
+    if (pathname.startsWith("/api")) {
+      const user = await getUserFromRequest(req);
+
+      switch (`${method} ${pathname}`) {
+        case "POST /api/orders":
+          req.body = await parseBody(req);
+          return orderController.createOrder(req, res, user);
+
+        case "GET /api/orders":
+          return orderController.getAllOrders(req, res, user);
+
+        case "POST /api/orders/answer":
+          req.body = await parseBody(req);
+          return orderController.answerOrder(req, res, user);
+
+        default:
+          res.writeHead(404);
+          return res.end("API route not found");
+      }
     }
 
-    if (pathname === '/' && method === 'GET') {
-        const indexPath = path.join(__dirname, 'html', 'index.html');
-        sendFile(res, indexPath, 'text/html');
-        return;
+    // ---------- HTML ----------
+    if (method === "GET") {
+      switch (pathname) {
+        case "/":
+        case "/index.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/index.html")
+          );
+
+        case "/about.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/about.html")
+          );
+        case "/services.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/services.html")
+          );
+
+        case "/registration.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/registration.html")
+          );
+        case "/team.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/team.html")
+          );
+
+        case "/orders":
+          return sendFile(
+            res,
+            path.join(
+              __dirname,
+              "resources",
+              "templates",
+              "html",
+              "orders.html"
+            )
+          );
+        case "/contacts.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/contacts.html")
+          );
+        case "/approaches.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/approaches.html")
+          );
+
+        case "/admin.html":
+          return sendFile(
+            res,
+            path.join(__dirname, "/resources/templates/html/admin.html")
+          );
+
+        default:
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          return res.end("Страница не найдена");
+      }
     }
 
-    res.statusCode = 404;
-    res.end('Not found');
+    res.writeHead(405);
+    res.end("Method not allowed");
+  } catch (err) {
+    console.error(err);
+    res.writeHead(500);
+    res.end("Server error");
+  }
 });
 
 server.listen(port, host, () => {
-    console.log(`Server listens http://${host}:${port}`);
-});
-
-process.on('SIGTERM', () => {
-    server.close(() => {
-        console.log('Server stopped');
-        process.exit(0);
-    });
+  console.log(`http://${host}:${port}/index.html`);
 });

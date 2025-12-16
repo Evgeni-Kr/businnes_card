@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+<body>
+<h1>Заказы</h1>
+<div id="orders"></div>
+
+<script>
+fetch('/api/orders', {
+    headers: {
+        'x-user': 'admin'
+    }
+})
+.then(r => r.json())
+.then(data => {
+    const div = document.getElementById('orders');
+    data.forEach(o => {
+        div.innerHTML += `
+        <div>
+            <p>${o.username} — ${o.service}</p>
+            <textarea id="r${o.id}"></textarea>
+            <button onclick="answer(${o.id}, ${o.user_id})">Ответить</button>
+        </div>`;
+    });
+});
+
+function answer(orderId, userId) {
+    fetch('/api/orders/answer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-user': 'admin'
+        },
+        body: JSON.stringify({
+            orderId,
+            userId,
+            response: document.getElementById('r'+orderId).value
+        })
+    });
+}
+</script>
+</body>
+</html>

@@ -286,7 +286,7 @@
     background-color: #3d8b40;
     transform: translateY(-3px);
 }
-
+.registration-form-container,
 .contact-form-container {
     flex: 1;
     background-color: rgba(255, 255, 255, 0.85);
@@ -296,16 +296,18 @@
     text-align: left;
 }
 
+.registration-form-container h2,
 .contact-form-container h2 {
     font-size: 2rem;
     margin-bottom: 30px;
     color: #333;
 }
 
+.registration-group,
 .form-group {
     margin-bottom: 20px;
 }
-
+.registration-group label,
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -313,6 +315,7 @@
     color: #555;
 }
 
+.registration-group input,
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -324,6 +327,8 @@
     transition: border-color 0.3s ease;
 }
 
+.registration-group input:focus,
+.registration-group select:focus,
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {

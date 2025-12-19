@@ -1,4 +1,4 @@
-const mongo = require('./mongo');
+const mongo = require('mongodb');
 const { ObjectId } = require('mongodb');
 
 class OrderRepository {

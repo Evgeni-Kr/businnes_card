@@ -1,5 +1,5 @@
 const Order = require('../entities/Order');
-const orderRepo = require('../database/orderRepository');
+const orderRepo = require('../repository/OrderRepository');
 const sendMail = require('../../utils/mailer');
 const { requireRole } = require('../../utils/auth');
 

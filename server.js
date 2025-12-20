@@ -56,11 +56,7 @@ const server = http.createServer(async (req, res) => {
 
     // ---------- IMAGES ----------
     if (pathname.startsWith("/resources/static/image")) {
-      
-      const filePath = path.join(
-        __dirname,
-        pathname        
-      );
+      const filePath = path.join(__dirname, pathname);
 
       return sendFile(res, filePath);
     }
@@ -70,11 +66,27 @@ const server = http.createServer(async (req, res) => {
       const filePath = path.join(__dirname, pathname);
       return sendFile(res, filePath);
     }
+    // ---------- TEMPLATES ----------
+    if (pathname.startsWith("/resources/")) {
+      const filePath = path.join(__dirname, pathname);
+      return sendFile(res, filePath);
+    }
+
     // ---------- API ----------
+    const authController = require("./js/controllers/authControllers");
+
     if (pathname.startsWith("/api")) {
       const user = await getUserFromRequest(req);
 
       switch (`${method} ${pathname}`) {
+        case "POST /api/auth/register":
+          req.body = await parseBody(req);
+          return authController.register(req, res);
+
+        case "POST /api/auth/login":
+          req.body = await parseBody(req);
+          return authController.login(req, res);
+
         case "POST /api/orders":
           req.body = await parseBody(req);
           return orderController.createOrder(req, res, user);
@@ -168,5 +180,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`http://${host}:${port}/index.html`);
+  console.log(`http://${host}:${port}/registration.html`);
 });

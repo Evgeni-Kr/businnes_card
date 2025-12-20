@@ -48,6 +48,7 @@ class Database {
         }
 
         // Хешируем пароль
+        console.log("Перед хешированием в бд", userEntity.getPassword());
         const hashedPassword = await bcrypt.hash(userEntity.getPassword(), 10);
         
         try {
@@ -78,7 +79,7 @@ class Database {
                 "SELECT * FROM my_user WHERE username = ?",
                 [username]
             );
-            
+            console.log();
             // Возвращаем entity объект
             return User.fromDatabase(rows[0]);
         } catch (error) {

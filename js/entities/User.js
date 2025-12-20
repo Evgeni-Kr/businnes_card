@@ -33,10 +33,12 @@ class User {
     }
 
     getPassword() {
+        console.log("user.getPassword", this.password);
         return this.password;
     }
 
     setPassword(password) {
+        console.log("user.setPassword", password)
         this.password = password;
     }
 
@@ -65,23 +67,29 @@ class User {
 
     static fromDatabase(row) {
         if (!row) return null;
-        
+        console.log("=============fromDatabase============");
+        console.log("row.password",row.password);
+        console.log("row.id",row.id);
+        console.log("row.email",row.email);
+        console.log("row.role",row.role);
+        console.log("=============fromDatabase============");
         return new User(
-            row.id,
-            row.username,
-            row.email,
-            row.password,
-            row.role
-        );
+    row.username,   // username
+    row.email,      // email
+    row.password,   // password (HASH!)
+    row.role,       // role
+    row.id          // id
+  );
     }
 
     static fromRequest(data) {
+        console.log("data.passwors user.js 79:", data.password );
         return new User(
-            null,
             data.username,
             data.email,
             data.password,
-            data.role || 'ROLE_USER'
+            data.role || 'ROLE_USER',
+            null
         );
     }
 

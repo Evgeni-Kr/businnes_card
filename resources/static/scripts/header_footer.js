@@ -7,6 +7,8 @@ async function loadAll() {
     }
     const html = await response.text();
     document.getElementById("header-placeholder").innerHTML = html;
+
+    initMobileMenu();
     console.log(html.substring(0, 100));
   } catch (error) {
     console.error("Ошибка загрузки header:", error);
@@ -24,7 +26,7 @@ async function loadAll() {
     document.getElementById("footer-placeholder").innerHTML = html;
     console.log(html.substring(0, 100));
   } catch (error) {
-    console.error("Ошибка загрузки header:", error);
+    console.error("Ошибка загрузки footer:", error);
     document.getElementById("footer-placeholder").innerHTML =
       "<p>Не удалось загрузить footer</p>";
   }
@@ -34,10 +36,7 @@ async function loadAll() {
   await loadCSS("/resources/static/css/base.css");
   await loadCSS("/resources/static/css/main.css");
   await loadCSS("/resources/static/css/responsive.css");
-  await loadCSS("/resources/static/css/pages.css")
-
-  
-  initMobileMenu();
+  await loadCSS("/resources/static/css/pages.css");
 }
 
 async function loadCSS(href) {

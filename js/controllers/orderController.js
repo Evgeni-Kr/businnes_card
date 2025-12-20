@@ -1,47 +1,45 @@
 const Order = require('../entities/Order');
-const orderRepo = require('../database/orderRepository');
-const sendMail = require('../../utils/mailer');
+const orderRepo = require('../repository/OrderRepository');
 const { requireRole } = require('../../utils/auth');
 
 async function createOrder(req, res, user) {
-    requireRole(user, 'ROLE_USER');
+    // requireRole(user, 'ROLE_USER');
 
     const order = new Order({
-        userId: user.getId(),
+        userId: user ? user.getId() : null,
         service: req.body.service,
         message: req.body.message
     });
 
     const errors = order.validate();
     if (errors.length) {
-        res.writeHead(400);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ errors }));
     }
 
-    const saved = await orderRepo.create(order);
-    res.end(JSON.stringify(saved));
+    const savedOrder = await orderRepo.create(order);
+
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(savedOrder));
 }
 
 async function getAllOrders(req, res, user) {
     requireRole(user, 'ROLE_ADMIN');
 
     const orders = await orderRepo.findAll();
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(orders));
 }
 
 async function answerOrder(req, res, user) {
     requireRole(user, 'ROLE_ADMIN');
 
-    await orderRepo.answer(req.body.orderId, req.body.response);
+    const { orderId, response } = req.body;
 
-    const orderUser = await db.findUserById(req.body.userId);
+    await orderRepo.answer(orderId, response);
 
-    await sendMail(
-        orderUser.getEmail(),
-        'Ответ по вашему заказу',
-        req.body.response
-    );
-
+    res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: true }));
 }
 

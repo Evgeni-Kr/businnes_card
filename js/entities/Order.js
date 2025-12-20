@@ -21,7 +21,7 @@ class Order {
 
     validate() {
         const errors = [];
-        if (!this.userId) errors.push('Не указан пользователь');
+        // if (!this.userId) errors.push('Не указан пользователь');
         if (!this.service) errors.push('Не указана услуга');
         if (!this.message || this.message.length < 10)
             errors.push('Сообщение слишком короткое');

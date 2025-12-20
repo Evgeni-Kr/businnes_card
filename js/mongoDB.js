@@ -1,26 +1,23 @@
 const { MongoClient } = require('mongodb');
 
-class MongoDB {
-    constructor() {
-        this.url = 'mongodb://127.0.0.1:27017';
-        this.dbName = 'business_cart';
-        this.client = new MongoClient(this.url);
-        this.db = null;
+const URL = 'mongodb://127.0.0.1:27017';
+const DB_NAME = 'business_cart';
+
+let db;
+
+async function connect() {
+
+    if (db) { 
+        console.log('MongoDB neconnected'); return db; 
     }
 
-    async connect() {
-        if (!this.db) {
-            await this.client.connect();
-            this.db = this.client.db(this.dbName);
-            console.log('MongoDB connected');
-        }
-        return this.db;
-    }
+    const client = new MongoClient(URL);
+    await client.connect();
 
-    async orders() {
-        const db = await this.connect();
-        return db.collection('orders');
-    }
+    db = client.db(DB_NAME);
+    console.log('MongoDB connected');
+
+    return db;
 }
 
-module.exports = new MongoDB();
+module.exports = { connect };

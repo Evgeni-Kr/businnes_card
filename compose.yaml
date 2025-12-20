@@ -1,0 +1,11 @@
+services:
+  businnescard1:
+    image: businnescard1
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 7000
+    ports:
+      - 7000:7000

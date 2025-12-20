@@ -7,8 +7,8 @@ const parseBody = require("./utils/bodyParser");
 const orderController = require("./js/controllers/orderController");
 const db = require("./js/database");
 
-const host = "127.0.0.1";
-const port = 7000;
+const host = "0.0.0.0";
+const port = process.env.PORT || 7000;
 
 // ---------- HELPERS ----------
 
@@ -180,5 +180,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`http://${host}:${port}/registration.html`);
+  console.log(`http://$localhost:${port}/registration.html`);
 });
